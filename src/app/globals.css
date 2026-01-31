@@ -50,22 +50,22 @@
 :root {
   --radius: 0rem;
   /* Modern minimalist: sharp corners */
-  --background: #F8FAFC;
+  --background: #F9F9F9;
   /* Off-White */
   --foreground: #000000;
   /* Pure Black */
-  --card: #F8FAFC;
+  --card: #F9F9F9;
   --card-foreground: #000000;
-  --popover: #F8FAFC;
+  --popover: #F9F9F9;
   --popover-foreground: #000000;
   --primary: #000000;
-  --primary-foreground: #F8FAFC;
+  --primary-foreground: #F9F9F9;
   --secondary: #1a1a1a;
-  --secondary-foreground: #F8FAFC;
+  --secondary-foreground: #F9F9F9;
   --muted: #e2e8f0;
   --muted-foreground: #64748b;
   --accent: #000000;
-  --accent-foreground: #F8FAFC;
+  --accent-foreground: #F9F9F9;
   --destructive: #ef4444;
   --border: #e2e8f0;
   --input: #e2e8f0;
@@ -74,7 +74,7 @@
   /* Custom Intensity Palette */
   --intensity-blue: #000000;
   --deep-blue: #1a1a1a;
-  --off-white: #F8FAFC;
+  --off-white: #F9F9F9;
   --pure-black: #000000;
 }
 
