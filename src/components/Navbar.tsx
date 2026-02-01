@@ -82,10 +82,23 @@ export default function Navbar() {
         : (isOverHero ? "brightness-0" : "brightness-0 invert");
 
     useEffect(() => {
+        let lastScrollY = 0;
+        let ticking = false;
+
         const handleScroll = () => {
-            setIsScrolled(window.scrollY > 20);
+            if (!ticking) {
+                window.requestAnimationFrame(() => {
+                    const currentScroll = window.scrollY;
+                    if (Math.abs(currentScroll - lastScrollY) > 5) {
+                        setIsScrolled(currentScroll > 20);
+                        lastScrollY = currentScroll;
+                    }
+                    ticking = false;
+                });
+                ticking = true;
+            }
         };
-        window.addEventListener("scroll", handleScroll);
+        window.addEventListener("scroll", handleScroll, { passive: true });
         return () => window.removeEventListener("scroll", handleScroll);
     }, []);
 
@@ -141,10 +154,10 @@ export default function Navbar() {
     const activeItem = navItems.find(item => item.label === activeTabLabel);
 
     return (
-        <div className="fixed top-6 left-1/2 -translate-x-1/2 w-[95%] max-w-[1000px] z-[100] px-4">
+        <div className="fixed top-6 left-1/2 -translate-x-1/2 w-[95%] max-w-[1000px] z-[100] px-4 transform-gpu">
             <nav
                 ref={navRef}
-                className={`w-full backdrop-blur-3xl border rounded-2xl shadow-2xl overflow-hidden transition-all duration-500 ease-in-out ${isExpanded ? "bg-white text-black border-black/5" : navbarBgClass
+                className={`w-full backdrop-blur-3xl border rounded-2xl shadow-2xl overflow-hidden transition-all duration-500 ease-in-out transform-gpu will-change-transform ${isExpanded ? "bg-white text-black border-black/5" : navbarBgClass
                     }`}
                 style={{ height: "70px" }}
                 onMouseLeave={handleMouseLeaveNav}
