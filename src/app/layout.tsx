@@ -15,7 +15,7 @@ const notoDevanagari = Noto_Sans_Devanagari({
 });
 
 export const metadata: Metadata = {
-  title: "Intensity Space | भारत की अंतरिक्ष यात्रा — India's Next Frontier in Space",
+  title: "Intensity Space",
   description: "India-born space technology company pioneering affordable, reliable orbital launch systems. Sovereign innovation from Bharat to the cosmos.",
 };
 
