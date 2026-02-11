@@ -6,8 +6,9 @@
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-inter);
-  --font-heading: var(--font-space-grotesk);
+  --font-sans: var(--font-outfit);
+  --font-heading: var(--font-outfit);
+  --font-hindi: var(--font-noto-devanagari);
   --font-mono: var(--font-geist-mono);
   --color-sidebar-ring: var(--sidebar-ring);
   --color-sidebar-border: var(--sidebar-border);
@@ -38,6 +39,24 @@
   --color-popover: var(--popover);
   --color-card-foreground: var(--card-foreground);
   --color-card: var(--card);
+
+  /* Indian Cultural Palette — Light & Warm */
+  --color-saffron-gold: var(--saffron-gold);
+  --color-saffron-light: var(--saffron-light);
+  --color-sky-blue: var(--sky-blue);
+  --color-sky-light: var(--sky-light);
+  --color-temple-ivory: var(--temple-ivory);
+  --color-beige: var(--beige);
+  --color-sacred-red: var(--sacred-red);
+  --color-lotus-pink: var(--lotus-pink);
+  --color-peacock-green: var(--peacock-green);
+  --color-soft-white: var(--soft-white);
+  --color-pure-black: var(--pure-black);
+  --color-charcoal: var(--charcoal);
+  --color-grey-1: var(--grey-1);
+  --color-grey-2: var(--grey-2);
+  --color-grey-3: var(--grey-3);
+
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
@@ -49,54 +68,78 @@
 
 :root {
   --radius: 0rem;
-  /* Modern minimalist: sharp corners */
-  --background: #FAF9F6;
-  /* Creamy Off-White */
-  --foreground: #000000;
-  /* Pure Black */
-  --card: #FAF9F6;
-  --card-foreground: #000000;
-  --popover: #FAF9F6;
-  --popover-foreground: #000000;
-  --primary: #000000;
-  --primary-foreground: #FAF9F6;
-  --secondary: #1a1a1a;
-  --secondary-foreground: #FAF9F6;
-  --muted: #e2e8f0;
-  --muted-foreground: #64748b;
-  --accent: #000000;
-  --accent-foreground: #FAF9F6;
+
+  /* ═══════════════════════════════════════════
+     🇮🇳 Indian Cultural Color Palette
+     Light, warm, and elegant
+     ═══════════════════════════════════════════ */
+
+  /* Orange Shades — Soft saffron, not full orange */
+  --saffron-gold: #E8960A;
+  /* केसरी — Warm saffron */
+  --saffron-light: #F5D5A0;
+  /* Light saffron / peach tint */
+
+  /* Sky Blue Shades — Light, airy, not full blue */
+  --sky-blue: #6CB4EE;
+  /* Soft sky blue */
+  --sky-light: #D6ECFA;
+  /* Very light sky wash */
+
+  /* Warm Neutrals */
+  --beige: #F5F0E8;
+  /* Warm beige base */
+  --temple-ivory: #FAF3E8;
+  /* Sandalwood ivory */
+  --soft-white: #FAFAFA;
+  /* Near-white */
+
+  /* Accent Colors */
+  --sacred-red: #C23B22;
+  /* Temple vermillion */
+  --lotus-pink: #D4578D;
+  /* Lotus pink */
+  --peacock-green: #006D5B;
+  /* Peacock green */
+
+  /* Text Colors */
+  --charcoal: #2D2D2D;
+  /* Main text — warm dark */
+  --pure-black: #0A0A0A;
+  --grey-1: #E8E4DE;
+  /* Warm light grey */
+  --grey-2: #A09890;
+  /* Warm mid-grey */
+  --grey-3: #5A5550;
+  /* Warm dark grey */
+
+  /* Semantic Mappings */
+  --background: #FFFFFF;
+  --foreground: var(--charcoal);
+
+  --card: #FFFFFF;
+  --card-foreground: var(--charcoal);
+
+  --popover: #FFFFFF;
+  --popover-foreground: var(--charcoal);
+
+  --primary: var(--charcoal);
+  --primary-foreground: #FFFFFF;
+
+  --secondary: var(--beige);
+  --secondary-foreground: var(--charcoal);
+
+  --muted: var(--grey-1);
+  --muted-foreground: var(--grey-3);
+
+  --accent: var(--saffron-gold);
+  --accent-foreground: var(--charcoal);
+
   --destructive: #ef4444;
-  --border: #e2e8f0;
-  --input: #e2e8f0;
-  --ring: #000000;
 
-  /* Custom Intensity Palette */
-  --intensity-blue: #000000;
-  --deep-blue: #1a1a1a;
-  --off-white: #FAF9F6;
-  --pure-black: #000000;
-}
-
-.dark {
-  --background: #000000;
-  --foreground: #F8FAFC;
-  --card: #1a1a1a;
-  --card-foreground: #F8FAFC;
-  --popover: #1a1a1a;
-  --popover-foreground: #F8FAFC;
-  --primary: #F8FAFC;
-  --primary-foreground: #000000;
-  --secondary: #F8FAFC;
-  --secondary-foreground: #1a1a1a;
-  --muted: #1e293b;
-  --muted-foreground: #94a3b8;
-  --accent: #F8FAFC;
-  --accent-foreground: #000000;
-  --destructive: #7f1d1d;
-  --border: #1e293b;
-  --input: #1e293b;
-  --ring: #F8FAFC;
+  --border: var(--grey-1);
+  --input: var(--grey-1);
+  --ring: var(--saffron-gold);
 }
 
 @layer base {
@@ -108,11 +151,97 @@
     @apply bg-background text-foreground;
   }
 }
+
+/* ═══════════════════════════════════════════
+   🕉️  Indian Cultural Animations
+   ═══════════════════════════════════════════ */
+
+@keyframes mandala-spin {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.animate-mandala-spin {
+  animation: mandala-spin 60s linear infinite;
+}
+
+@keyframes rangoli-reveal {
+  from {
+    opacity: 0;
+    transform: scale(0.6);
+    filter: blur(8px);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1);
+    filter: blur(0);
+  }
+}
+
+.animate-rangoli-reveal {
+  animation: rangoli-reveal 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes diya-glow {
+
+  0%,
+  100% {
+    opacity: 0.4;
+    filter: blur(20px);
+  }
+
+  50% {
+    opacity: 0.7;
+    filter: blur(30px);
+  }
+}
+
+.animate-diya-glow {
+  animation: diya-glow 4s ease-in-out infinite;
+}
+
 @keyframes slow-zoom {
-  from { transform: scale(1.05); }
-  to { transform: scale(1.15); }
+  from {
+    transform: scale(1.05);
+  }
+
+  to {
+    transform: scale(1.15);
+  }
 }
 
 .animate-slow-zoom {
   animation: slow-zoom 30s ease-in-out infinite alternate;
+}
+
+@keyframes float-particle {
+
+  0%,
+  100% {
+    transform: translateY(0) translateX(0);
+    opacity: 0;
+  }
+
+  10% {
+    opacity: 1;
+  }
+
+  90% {
+    opacity: 1;
+  }
+
+  100% {
+    transform: translateY(-100vh) translateX(20px);
+    opacity: 0;
+  }
+}
+
+.animate-float-particle {
+  animation: float-particle 8s ease-in-out infinite;
 }

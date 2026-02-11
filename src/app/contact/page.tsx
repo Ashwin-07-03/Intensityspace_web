@@ -2,6 +2,7 @@
 
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import Image from "next/image";
 import { motion } from "framer-motion";
 
 export default function ContactPage() {
@@ -9,93 +10,187 @@ export default function ContactPage() {
     const gmailUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=${email}`;
 
     return (
-        <main className="min-h-screen bg-black overflow-hidden selection:bg-white selection:text-black">
-            {/* Force Navbar to be transparent/dark-compatible */}
-            <Navbar dark />
+        <main className="min-h-screen bg-beige overflow-hidden selection:bg-saffron-gold/30 selection:text-charcoal">
+            <Navbar />
 
-            {/* Contact Section */}
-            <section className="relative min-h-screen flex flex-col items-center justify-center px-8 pt-32 pb-20">
-                {/* Background Animation / Elements */}
-                <div className="absolute inset-0 overflow-hidden pointer-events-none">
-                    <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-blue-500/10 blur-[120px] rounded-full" />
-                    <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-purple-500/10 blur-[120px] rounded-full" />
-                </div>
+            {/* Split Layout — Image Left | Content Right */}
+            <section className="relative min-h-screen flex flex-col md:flex-row pt-[90px]">
 
-                {/* Grid Lines */}
-                <div className="absolute inset-0 z-0 opacity-10">
-                    <div className="absolute left-[8%] top-0 w-[1px] h-full bg-white/[0.2]" />
-                    <div className="absolute right-[8%] top-0 w-[1px] h-full bg-white/[0.2]" />
-                </div>
+                {/* ─── Left: Stacked Images ─── */}
+                <div className="w-full md:w-[45%] p-4 md:p-6 self-start space-y-4">
+                    {/* Top image — Arched Corridor */}
+                    <div className="relative w-full h-[40vh] md:h-[70vh] rounded-2xl overflow-hidden">
+                        <Image
+                            src="/contact-arches.jpg"
+                            alt="Indian Architecture — Arched Corridor"
+                            fill
+                            className="object-cover"
+                            priority
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-t from-charcoal/20 via-transparent to-transparent" />
+                    </div>
 
-                <div className="relative z-10 text-center max-w-5xl mx-auto">
-                    <motion.div
-                        initial={{ opacity: 0, y: 30 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.8, ease: "easeOut" }}
-                    >
-                        <p className="text-[10px] md:text-xs text-white/40 font-heading font-black tracking-[0.8em] uppercase mb-12">
-                            Communication // Channel 01
+                    {/* Bottom image — Temple */}
+                    <div className="relative w-full h-[35vh] md:h-[60vh] rounded-2xl overflow-hidden">
+                        <Image
+                            src="/contact-temple.jpg"
+                            alt="Ancient Indian Temple"
+                            fill
+                            className="object-cover"
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-t from-charcoal/20 via-transparent to-transparent" />
+                    </div>
+
+                    {/* Third image — Cave Temple */}
+                    <div className="relative w-full h-[35vh] md:h-[60vh] rounded-2xl overflow-hidden">
+                        <Image
+                            src="/contact-caves.jpg"
+                            alt="Ancient Indian Cave Architecture"
+                            fill
+                            className="object-cover"
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-t from-charcoal/20 via-transparent to-transparent" />
+                    </div>
+
+                    {/* Visit India label */}
+                    <div className="flex flex-col items-center gap-2 pt-4 opacity-80">
+                        <p className="text-[10px] font-sans font-black tracking-[0.5em] uppercase text-charcoal">
+                            Visit India
                         </p>
+                        <div className="flex items-center gap-2">
+                            <div className="h-[1px] w-8 bg-charcoal/20" />
+                            <div className="w-1 h-1 rounded-full bg-saffron-gold" />
+                            <div className="h-[1px] w-8 bg-charcoal/20" />
+                        </div>
+                    </div>
+                </div>
 
-                        <h1 className="text-6xl md:text-8xl lg:text-[10rem] font-heading font-black leading-[0.85] tracking-[-0.04em] text-white uppercase mb-16">
-                            Lets <br />
-                            <span className="text-white/20">Talk</span>
-                        </h1>
-                    </motion.div>
+                {/* ─── Right: Contact Content ─── */}
+                <div className="w-full md:w-[55%] relative overflow-hidden" style={{ backgroundColor: '#F9F7F4' }}>
 
-                    <motion.div
-                        initial={{ opacity: 0, scale: 0.9 }}
-                        animate={{ opacity: 1, scale: 1 }}
-                        transition={{ duration: 1, delay: 0.4, ease: "easeOut" }}
-                        className="group relative inline-block mb-32"
-                    >
-                        <a
-                            href={gmailUrl}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="relative block py-4 px-2"
+
+
+                    <div className="relative z-10 max-w-xl mx-auto px-8 md:px-16 py-16 md:py-24">
+
+                        {/* Hindi heading */}
+                        <motion.div
+                            initial={{ opacity: 0, y: 20 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ duration: 0.7 }}
                         >
-                            <span className="relative z-10 text-2xl md:text-4xl lg:text-7xl font-heading font-light tracking-tighter text-white/40 group-hover:text-white transition-all duration-700 ease-in-out">
-                                {email}
-                            </span>
-                            <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-0 h-[1px] bg-white transition-all duration-700 ease-in-out group-hover:w-full" />
-                        </a>
-
-                        <p className="mt-6 text-[10px] text-white/20 tracking-[0.5em] uppercase opacity-0 group-hover:opacity-100 transition-all duration-700">
-                            Click to open Gmail
-                        </p>
-                    </motion.div>
-
-                    <motion.div
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        transition={{ duration: 1, delay: 0.8 }}
-                        className="grid grid-cols-1 md:grid-cols-3 gap-16 text-left border-t border-white/5 pt-16"
-                    >
-                        <div>
-                            <h3 className="text-[10px] font-heading font-black text-white/30 uppercase tracking-[0.4em] mb-6">General Inbox</h3>
-                            <p className="text-white/60 text-sm leading-relaxed font-light">
-                                For inquiries regarding our mission, launch schedules, and corporate information.
+                            <p className="font-hindi text-saffron-gold text-sm tracking-widest mb-2">
+                                संपर्क करें
                             </p>
-                        </div>
-                        <div>
-                            <h3 className="text-[10px] font-heading font-black text-white/30 uppercase tracking-[0.4em] mb-6">Partnerships</h3>
-                            <p className="text-white/60 text-sm leading-relaxed font-light">
-                                Strategic collaborations and supplier integrations for the Intensity-1 platform.
+                            <h1 className="text-4xl md:text-5xl lg:text-6xl font-sans font-black tracking-tight text-black leading-[1] mb-4">
+                                Get in<br />Touch.
+                            </h1>
+                            <p className="text-black/80 text-sm leading-relaxed mb-12 max-w-md">
+                                We&apos;d love to hear from you — whether you&apos;re exploring partnerships, have questions about our mission, or want to join India&apos;s next space frontier.
                             </p>
-                        </div>
-                        <div>
-                            <h3 className="text-[10px] font-heading font-black text-white/30 uppercase tracking-[0.4em] mb-6">Headquarters</h3>
-                            <p className="text-white/60 text-sm leading-relaxed font-light">
-                                Distributed global operations with core infrastructure in development.
-                            </p>
-                        </div>
-                    </motion.div>
-                </div>
+                        </motion.div>
 
-                {/* Scroll Down */}
-                <div className="absolute bottom-8 left-1/2 -translate-x-1/2">
-                    <div className="w-[1px] h-12 bg-gradient-to-b from-white/20 to-transparent animate-pulse" />
+                        {/* Email CTA */}
+                        <motion.div
+                            initial={{ opacity: 0, y: 20 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ duration: 0.7, delay: 0.2 }}
+                            className="mb-16"
+                        >
+                            <p className="text-[10px] font-sans font-black text-black/60 uppercase tracking-[0.4em] mb-4">
+                                Write to us
+                            </p>
+                            <a
+                                href={gmailUrl}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="group inline-block"
+                            >
+                                <span className="text-xl md:text-2xl font-sans font-light tracking-tight text-black/90 group-hover:text-saffron-gold transition-colors duration-500">
+                                    {email}
+                                </span>
+                                <div className="h-[1.5px] w-0 bg-saffron-gold group-hover:w-full transition-all duration-500 mt-1" />
+                            </a>
+                        </motion.div>
+
+                        {/* Contact categories */}
+                        <motion.div
+                            initial={{ opacity: 0, y: 20 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ duration: 0.7, delay: 0.4 }}
+                            className="space-y-10 border-t border-charcoal/8 pt-10"
+                        >
+                            {/* General Inquiry */}
+                            <div>
+                                <div className="flex items-center gap-3 mb-2">
+                                    <div className="w-1.5 h-1.5 rounded-full bg-saffron-gold" />
+                                    <h3 className="text-[10px] font-sans font-black text-black/85 uppercase tracking-[0.3em]">
+                                        General Inquiry
+                                    </h3>
+                                </div>
+                                <p className="text-black/70 text-sm leading-relaxed pl-5">
+                                    Reach out about our launch schedules, mission capabilities, or technical questions.
+                                </p>
+                            </div>
+
+                            {/* Partnerships */}
+                            <div>
+                                <div className="flex items-center gap-3 mb-2">
+                                    <div className="w-1.5 h-1.5 rounded-full bg-sky-blue" />
+                                    <h3 className="text-[10px] font-sans font-black text-black/85 uppercase tracking-[0.3em]">
+                                        Partnerships
+                                    </h3>
+                                </div>
+                                <p className="text-black/70 text-sm leading-relaxed pl-5">
+                                    Strategic collaborations and supplier integrations for the Intensity-1 platform.
+                                </p>
+                            </div>
+
+                            {/* Careers */}
+                            <div>
+                                <div className="flex items-center gap-3 mb-2">
+                                    <div className="w-1.5 h-1.5 rounded-full bg-saffron-gold" />
+                                    <h3 className="text-[10px] font-sans font-black text-black/85 uppercase tracking-[0.3em]">
+                                        Careers
+                                    </h3>
+                                </div>
+                                <p className="text-black/70 text-sm leading-relaxed pl-5">
+                                    Join one of India&apos;s most ambitious aerospace teams. Open roles updated regularly.
+                                </p>
+                            </div>
+
+                            {/* Media */}
+                            <div>
+                                <div className="flex items-center gap-3 mb-2">
+                                    <div className="w-1.5 h-1.5 rounded-full bg-sky-blue" />
+                                    <h3 className="text-[10px] font-sans font-black text-black/85 uppercase tracking-[0.3em]">
+                                        Media &amp; Press
+                                    </h3>
+                                </div>
+                                <p className="text-black/70 text-sm leading-relaxed pl-5">
+                                    Media inquiries, press releases, and interview requests.
+                                </p>
+                            </div>
+                        </motion.div>
+
+                        {/* Headquarters */}
+                        <motion.div
+                            initial={{ opacity: 0, y: 20 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ duration: 0.7, delay: 0.6 }}
+                            className="mt-16 pt-10 border-t border-charcoal/8"
+                        >
+                            <p className="text-[10px] font-sans font-black text-black/60 uppercase tracking-[0.4em] mb-3">
+                                Headquarters
+                            </p>
+                            <p className="font-hindi text-saffron-gold/70 text-xs mb-2">
+                                ಪ್ರಧಾನ ಕಛೇರಿ
+                            </p>
+                            <p className="text-black/80 text-sm leading-relaxed">
+                                Bengaluru, India
+                            </p>
+
+                        </motion.div>
+                    </div>
                 </div>
             </section>
 

@@ -10,7 +10,7 @@ import { ChevronDown } from "lucide-react";
 const navItems = [
     {
         label: "Vehicle",
-        href: "/vehicle",
+        href: "",
         subItems: [
             { label: "Intensity-1", href: "/vehicle" },
             { label: "Specifications", href: "/vehicle#specs" },
@@ -20,7 +20,7 @@ const navItems = [
     },
     {
         label: "Company",
-        href: "/about",
+        href: "",
         subItems: [
             { label: "About Us", href: "/about" },
             { label: "Mission Profiles", href: "/mission" },
@@ -30,7 +30,7 @@ const navItems = [
     },
     {
         label: "Careers",
-        href: "/careers",
+        href: "",
         subItems: [
             { label: "Open Roles", href: "/careers" },
             { label: "Culture", href: "/careers#culture" },
@@ -57,16 +57,28 @@ export default function Navbar({ dark = false }: NavbarProps) {
         return () => window.removeEventListener("scroll", handleScroll);
     }, []);
 
-    const isTransparent = (isHome || dark) && !isScrolled;
+    const showBackground = isScrolled;
 
     return (
         <div className="fixed top-0 left-0 w-full z-[100] transform-gpu px-4 pt-6">
             <nav
-                className={`mx-auto max-w-[1000px] h-[70px] rounded-2xl border transition-all duration-500 will-change-[background-color,backdrop-filter,border-color,box-shadow] flex items-center justify-between px-8 ${isTransparent
-                    ? "bg-transparent border-transparent shadow-none"
-                    : "bg-[#FAF9F6]/80 border-black/10 shadow-2xl backdrop-blur-3xl"
+                className={`mx-auto max-w-[1000px] h-[70px] rounded-2xl border transition-all duration-500 will-change-[background-color,backdrop-filter,border-color,box-shadow] flex items-center justify-between px-8 relative ${showBackground
+                    ? "bg-white/90 border-saffron-gold/15 shadow-2xl backdrop-blur-3xl"
+                    : "bg-white/60 border-charcoal/5 backdrop-blur-xl"
                     }`}
             >
+                {/* Subtle rangoli dot pattern at bottom edge */}
+                <div className="absolute bottom-0 left-0 right-0 h-[2px] flex items-center justify-center">
+                    <div className="flex gap-3">
+                        {Array.from({ length: 20 }).map((_, i) => (
+                            <div
+                                key={i}
+                                className="w-[2px] h-[2px] rounded-full bg-saffron-gold/20"
+                            />
+                        ))}
+                    </div>
+                </div>
+
                 {/* Logo Left */}
                 <Link
                     href="/"
@@ -77,12 +89,14 @@ export default function Navbar({ dark = false }: NavbarProps) {
                             src="/logo.png"
                             alt="Intensity"
                             fill
-                            className={`object-contain ${isTransparent ? "brightness-0 invert" : "brightness-0"}`}
+                            className="object-contain brightness-0"
                         />
                     </div>
-                    <span className={`text-base font-heading font-black tracking-widest uppercase hidden sm:block ${isTransparent ? "text-white" : "text-black"}`}>
-                        Intensity
-                    </span>
+                    <div className="hidden sm:flex flex-col">
+                        <span className="text-base font-sans font-black tracking-widest uppercase text-charcoal">
+                            Intensity
+                        </span>
+                    </div>
                 </Link>
 
                 {/* Navigation Items Center */}
@@ -94,18 +108,26 @@ export default function Navbar({ dark = false }: NavbarProps) {
                             onMouseEnter={() => setHoveredItem(item.label)}
                             onMouseLeave={() => setHoveredItem(null)}
                         >
-                            <Link
-                                href={item.href}
-                                className={`px-5 py-2 text-[10px] md:text-xs font-heading font-black tracking-[0.2em] uppercase transition-colors duration-300 rounded-full flex items-center gap-1 ${isTransparent
-                                    ? "text-white hover:bg-white/10"
-                                    : "text-black hover:bg-black/10"
-                                    }`}
-                            >
-                                {item.label}
-                                {item.subItems && (
-                                    <ChevronDown className={`w-3 h-3 transition-transform duration-300 ${hoveredItem === item.label ? 'rotate-180' : ''}`} />
-                                )}
-                            </Link>
+                            {item.href ? (
+                                <Link
+                                    href={item.href}
+                                    className="px-5 py-2 text-[10px] md:text-xs font-sans font-black tracking-[0.2em] uppercase transition-colors duration-300 rounded-full flex items-center gap-1 text-charcoal hover:text-saffron-gold hover:bg-saffron-gold/5"
+                                >
+                                    {item.label}
+                                    {item.subItems && (
+                                        <ChevronDown className={`w-3 h-3 transition-transform duration-300 ${hoveredItem === item.label ? 'rotate-180' : ''}`} />
+                                    )}
+                                </Link>
+                            ) : (
+                                <div
+                                    className="px-5 py-2 text-[10px] md:text-xs font-sans font-black tracking-[0.2em] uppercase transition-colors duration-300 rounded-full flex items-center gap-1 cursor-default text-charcoal hover:text-saffron-gold hover:bg-saffron-gold/5"
+                                >
+                                    {item.label}
+                                    {item.subItems && (
+                                        <ChevronDown className={`w-3 h-3 transition-transform duration-300 ${hoveredItem === item.label ? 'rotate-180' : ''}`} />
+                                    )}
+                                </div>
+                            )}
 
                             <AnimatePresence>
                                 {hoveredItem === item.label && item.subItems && (
@@ -116,19 +138,13 @@ export default function Navbar({ dark = false }: NavbarProps) {
                                         transition={{ duration: 0.2, ease: "easeOut" }}
                                         className="absolute top-[80%] left-1/2 -translate-x-1/2 pt-4 min-w-[200px]"
                                     >
-                                        <div className={`rounded-xl border shadow-2xl backdrop-blur-3xl overflow-hidden ${isTransparent
-                                                ? "bg-black/90 border-white/10"
-                                                : "bg-white/95 border-black/10"
-                                            }`}>
+                                        <div className="rounded-xl border shadow-2xl backdrop-blur-3xl overflow-hidden bg-white/95 border-saffron-gold/10">
                                             <div className="py-2">
                                                 {item.subItems.map((subItem) => (
                                                     <Link
                                                         key={subItem.label}
                                                         href={subItem.href}
-                                                        className={`block px-5 py-3 text-[9px] font-heading font-black tracking-[0.2em] uppercase transition-colors ${isTransparent
-                                                                ? "text-white/60 hover:text-white hover:bg-white/10"
-                                                                : "text-black/60 hover:text-black hover:bg-black/5"
-                                                            }`}
+                                                        className="block px-5 py-3 text-[9px] font-sans font-black tracking-[0.2em] uppercase transition-colors text-charcoal/50 hover:text-saffron-gold hover:bg-saffron-gold/5"
                                                     >
                                                         {subItem.label}
                                                     </Link>
@@ -145,10 +161,7 @@ export default function Navbar({ dark = false }: NavbarProps) {
                 {/* Action Button Right */}
                 <Link
                     href="/contact"
-                    className={`hidden md:flex items-center px-6 py-2 rounded-full text-[10px] font-heading font-black tracking-widest uppercase transition-all duration-300 ${isTransparent
-                        ? "bg-white text-black hover:bg-white/90"
-                        : "bg-black text-white hover:bg-black/80"
-                        }`}
+                    className="hidden md:flex items-center px-6 py-2 rounded-full text-[10px] font-sans font-black tracking-widest uppercase transition-all duration-300 bg-charcoal text-white hover:bg-saffron-gold hover:text-charcoal"
                 >
                     Contact
                 </Link>
@@ -156,4 +169,3 @@ export default function Navbar({ dark = false }: NavbarProps) {
         </div>
     );
 }
-
