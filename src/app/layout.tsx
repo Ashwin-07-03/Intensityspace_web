@@ -16,7 +16,7 @@ const notoDevanagari = Noto_Sans_Devanagari({
 
 export const metadata: Metadata = {
   title: "Intensity Space | भारत की अंतरिक्ष यात्रा — India's Next Frontier in Space",
-  description: "India-born space technology company pioneering affordable, reliable orbital launch systems. Sovereign innovation from Bharat to the cosmos. भारत से अंतरिक्ष तक।",
+  description: "India-born space technology company pioneering affordable, reliable orbital launch systems. Sovereign innovation from Bharat to the cosmos.",
 };
 
 import SmoothScroll from "@/components/SmoothScroll";

@@ -40,10 +40,7 @@ export default function Footer() {
                         <p className="text-charcoal/40 text-sm mb-3">
                             Pioneering India&apos;s future in orbital launches and space transportation.
                         </p>
-                        {/* Devanagari tagline */}
-                        <p className="font-hindi text-saffron-gold/70 text-sm tracking-wide">
-                            भारत से अंतरिक्ष तक
-                        </p>
+
                         {/* Made in India badge */}
                         <div className="flex items-center gap-2 mt-4 px-3 py-1.5 rounded-full bg-saffron-gold/5 border border-saffron-gold/15 w-fit">
 
