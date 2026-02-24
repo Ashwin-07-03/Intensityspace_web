@@ -68,6 +68,61 @@ export function MandalaPattern({ className = "" }: { className?: string }) {
 }
 
 /**
+ * FloralMandala — Detailed floral pattern like a marigold/lotus rangoli
+ */
+export function FloralMandala({ className = "" }: { className?: string }) {
+    return (
+        <svg
+            viewBox="0 0 500 500"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+            className={className}
+        >
+            {/* Outer Marigold Petals */}
+            {Array.from({ length: 32 }).map((_, i) => (
+                <path
+                    key={`outer-marigold-${i}`}
+                    d="M250 250 Q230 100 250 50 Q270 100 250 250"
+                    fill="currentColor"
+                    opacity="0.1"
+                    transform={`rotate(${i * 11.25} 250 250)`}
+                />
+            ))}
+
+            {/* Mid Lotus Petals */}
+            {Array.from({ length: 16 }).map((_, i) => (
+                <path
+                    key={`mid-lotus-${i}`}
+                    d="M250 250 Q210 160 250 100 Q290 160 250 250"
+                    stroke="currentColor"
+                    strokeWidth="1.5"
+                    fill="currentColor"
+                    fillOpacity="0.05"
+                    opacity="0.2"
+                    transform={`rotate(${i * 22.5} 250 250)`}
+                />
+            ))}
+
+            {/* Inner layered petals */}
+            {Array.from({ length: 12 }).map((_, i) => (
+                <path
+                    key={`inner-petal-${i}`}
+                    d="M250 250 Q230 190 250 150 Q270 190 250 250"
+                    fill="currentColor"
+                    opacity="0.3"
+                    transform={`rotate(${i * 30} 250 250)`}
+                />
+            ))}
+
+            {/* Center pistil/details */}
+            <circle cx="250" cy="250" r="40" stroke="currentColor" strokeWidth="2" strokeDasharray="4 4" opacity="0.3" />
+            <circle cx="250" cy="250" r="30" fill="currentColor" opacity="0.2" />
+            <circle cx="250" cy="250" r="10" fill="currentColor" opacity="0.4" />
+        </svg>
+    );
+}
+
+/**
  * RangoliDivider — Horizontal section divider with kolam-inspired dots & lines
  */
 export function RangoliDivider({ className = "" }: { className?: string }) {
@@ -181,6 +236,48 @@ export function GoldenParticles() {
                         animation: `float-particle ${p.duration}s ease-in-out ${p.delay}s infinite`,
                     }}
                 />
+            ))}
+        </div>
+    );
+}
+
+
+/**
+ * FloatingPetals — Falling flower petal animation
+ */
+const PETAL_DATA = [
+    { size: 12, left: 10, duration: 12, delay: 0 },
+    { size: 18, left: 25, duration: 15, delay: 2 },
+    { size: 14, left: 45, duration: 11, delay: 5 },
+    { size: 16, left: 65, duration: 14, delay: 1 },
+    { size: 20, left: 85, duration: 16, delay: 3 },
+    { size: 10, left: 15, duration: 13, delay: 6 },
+    { size: 15, left: 55, duration: 12, delay: 4 },
+    { size: 12, left: 75, duration: 15, delay: 7 },
+    { size: 22, left: 95, duration: 17, delay: 2.5 },
+    { size: 16, left: 35, duration: 14, delay: 8 },
+];
+
+export function FloatingPetals() {
+    return (
+        <div className="absolute inset-0 overflow-hidden pointer-events-none z-[4]">
+            {PETAL_DATA.map((p, i) => (
+                <div
+                    key={`petal-${i}`}
+                    className="absolute text-saffron-gold/30"
+                    style={{
+                        width: `${p.size}px`,
+                        height: `${p.size}px`,
+                        left: `${p.left}%`,
+                        top: `-20px`,
+                        animation: `float-petal ${p.duration}s linear ${p.delay}s infinite`,
+                    }}
+                >
+                    {/* SVG Petal shape */}
+                    <svg viewBox="0 0 20 20" fill="currentColor" className="w-full h-full drop-shadow-sm">
+                        <path d="M10 0C10 0 0 5 0 10C0 15 5 20 10 20C15 20 20 15 20 10C20 5 10 0 10 0Z" />
+                    </svg>
+                </div>
             ))}
         </div>
     );

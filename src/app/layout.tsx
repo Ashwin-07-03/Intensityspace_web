@@ -1,11 +1,19 @@
 import type { Metadata } from "next";
-import { Outfit, Noto_Sans_Devanagari } from "next/font/google";
+import { Outfit, Noto_Sans_Devanagari, Cormorant_Garamond } from "next/font/google";
+import SmoothScroll from "@/components/SmoothScroll";
 import "./globals.css";
 
 const outfit = Outfit({
   variable: "--font-outfit",
   subsets: ["latin"],
   weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
+});
+
+const cormorant = Cormorant_Garamond({
+  variable: "--font-cormorant",
+  subsets: ["latin"],
+  weight: ["300", "400", "500", "600", "700"],
+  style: ["normal", "italic"],
 });
 
 const notoDevanagari = Noto_Sans_Devanagari({
@@ -19,7 +27,6 @@ export const metadata: Metadata = {
   description: "India-born space technology company pioneering affordable, reliable orbital launch systems. Sovereign innovation from Bharat to the cosmos.",
 };
 
-import SmoothScroll from "@/components/SmoothScroll";
 
 export default function RootLayout({
   children,
@@ -50,7 +57,7 @@ export default function RootLayout({
         />
       </head>
       <body
-        className={`${outfit.variable} ${notoDevanagari.variable} font-sans antialiased bg-background text-foreground`}
+        className={`${outfit.variable} ${cormorant.variable} ${notoDevanagari.variable} font-sans antialiased bg-background text-foreground`}
       >
         <SmoothScroll>
           {children}

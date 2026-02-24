@@ -2,168 +2,306 @@
 
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
-import Image from "next/image";
 import { motion } from "framer-motion";
-import { LotusAccent, MandalaPattern } from "@/components/IndianPatterns";
+
+// ─── Colour Roles ─────────────────────────────────────────────────────────────
+// bg-hero:       #406B8C  (Queen Blue)
+// bg-body:       #E4C5AF  (Desert Sand)
+// bg-cta:        #406B8C  (Queen Blue)
+// text-primary:  #406B8C  (Queen Blue)
+// text-heading:  #FFFFFF  (hero) | #406B8C (body)
+// accent-hot:    #EB8445  (Mandarin)   — taglines, hover, CTA, orbit label hover
+// accent-warm:   #A4485E  (English Red) — tags / pills
+// accent-cool:   #9CBCC6  (Cadet Blue) — borders, muted text, floral elements
+// ─────────────────────────────────────────────────────────────────────────────
+
+const C = {
+    queenBlue: "#406B8C",
+    englishRed: "#A4485E",
+    mandarin: "#EB8445",
+    cadetBlue: "#9CBCC6",
+    darkHero: "#1C3347",
+    white: "#FFFFFF",
+};
 
 const missions = [
     {
-        capacity: "6,000kg",
+        index: "01",
+        capacity: "6,000 kg",
         orbit: "LEO",
         fullName: "Low Earth Orbit",
         tagline: "Reach. Deploy. Dominate.",
-        description: "The workhorse of space logistics, delivering maximum payload to Low Earth Orbit for satellites, stations, and beyond.",
-        image: "/mission-leo.png",
-        tags: ["Satellite Deployment", "ISS Resupply", "Commercial"]
+        description:
+            "The workhorse of space logistics, delivering maximum payload for satellite constellations, space stations, and commercial missions requiring high-frequency access.",
+        tags: ["Satellite Deployment", "ISS Resupply", "Commercial"],
     },
     {
-        capacity: "4,000kg",
+        index: "02",
+        capacity: "4,000 kg",
         orbit: "SSO",
         fullName: "Sun-Synchronous Orbit",
         tagline: "Follow the light. Map the Earth.",
-        description: "Perfect for Earth observation and remote sensing missions requiring consistent solar illumination.",
-        image: "/mission-sso.png",
-        tags: ["Earth Observation", "Remote Sensing", "Imaging"]
+        description:
+            "Consistent solar illumination across every pass makes this the ideal orbit for Earth observation, environmental monitoring, and high-resolution remote sensing.",
+        tags: ["Earth Observation", "Remote Sensing", "Imaging"],
     },
     {
-        capacity: "1,500kg",
+        index: "03",
+        capacity: "1,500 kg",
         orbit: "GTO",
-        fullName: "Geostationary Transfer Orbit",
+        fullName: "Geostationary Transfer",
         tagline: "Lock position. Cover continents.",
-        description: "Gateway to geostationary orbit for communications satellites serving global coverage zones.",
-        image: "/mission-gto.png",
-        tags: ["Communications", "Broadcasting", "Telecom"]
+        description:
+            "The gateway to geostationary orbit — enabling global communications satellites to serve entire hemispheres with stable, high-bandwidth coverage.",
+        tags: ["Communications", "Broadcasting", "Telecom"],
     },
     {
-        capacity: "1,200kg",
+        index: "04",
+        capacity: "1,200 kg",
         orbit: "TLI",
         fullName: "Trans-Lunar Injection",
         tagline: "Beyond Earth. To the Moon.",
-        description: "Enabling lunar missions and deep space exploration with precision trajectory insertion.",
-        image: "/mission-tli.png",
-        tags: ["Lunar Mission", "Deep Space", "Exploration"]
-    }
+        description:
+            "Precision trajectory insertion for lunar and deep-space missions, opening the frontier beyond Earth's gravity well for science and exploration.",
+        tags: ["Lunar Mission", "Deep Space", "Exploration"],
+    },
 ];
+
+// ── Decorative SVG — consistent palette ────────────────────────────────────
+function FloralLarge() {
+    return (
+        <svg viewBox="0 0 500 500" width={420} height={420} fill="none" xmlns="http://www.w3.org/2000/svg" style={{ opacity: 0.22 }}>
+            {Array.from({ length: 28 }).map((_, i) => (
+                <path key={`a${i}`} d="M250 250 Q228 95 250 40 Q272 95 250 250"
+                    fill={C.mandarin} opacity="0.55" transform={`rotate(${i * 12.857} 250 250)`} />
+            ))}
+            {Array.from({ length: 16 }).map((_, i) => (
+                <path key={`b${i}`} d="M250 250 Q215 155 250 100 Q285 155 250 250"
+                    fill={C.cadetBlue} opacity="0.6" transform={`rotate(${i * 22.5} 250 250)`} />
+            ))}
+            {Array.from({ length: 10 }).map((_, i) => (
+                <path key={`c${i}`} d="M250 250 Q234 192 250 158 Q266 192 250 250"
+                    fill={C.cadetBlue} opacity="0.7" transform={`rotate(${i * 36} 250 250)`} />
+            ))}
+            <circle cx="250" cy="250" r="44" stroke={C.englishRed} strokeWidth="1.5" strokeDasharray="5 5" opacity="0.5" />
+            <circle cx="250" cy="250" r="26" fill={C.englishRed} opacity="0.35" />
+            <circle cx="250" cy="250" r="10" fill={C.white} opacity="0.5" />
+        </svg>
+    );
+}
+
+function FloralSmall() {
+    return (
+        <svg viewBox="0 0 400 400" width={280} height={280} fill="none" xmlns="http://www.w3.org/2000/svg" style={{ opacity: 0.18 }}>
+            {Array.from({ length: 18 }).map((_, i) => (
+                <path key={`d${i}`} d="M200 200 Q180 90 200 40 Q220 90 200 200"
+                    fill={C.cadetBlue} opacity="0.65" transform={`rotate(${i * 20} 200 200)`} />
+            ))}
+            {Array.from({ length: 10 }).map((_, i) => (
+                <path key={`e${i}`} d="M200 200 Q184 130 200 95 Q216 130 200 200"
+                    fill={C.mandarin} opacity="0.6" transform={`rotate(${i * 36} 200 200)`} />
+            ))}
+            <circle cx="200" cy="200" r="12" fill={C.cadetBlue} opacity="0.6" />
+        </svg>
+    );
+}
+
+const fadeUp = {
+    hidden: { opacity: 0, y: 20 },
+    show: (i: number = 0) => ({
+        opacity: 1, y: 0,
+        transition: { duration: 0.65, delay: i * 0.1, ease: [0.16, 1, 0.3, 1] as [number, number, number, number] },
+    }),
+};
 
 export default function MissionPage() {
     return (
-        <main className="min-h-screen bg-white text-charcoal selection:bg-saffron-gold/20 font-sans overflow-x-hidden">
+        <main className="min-h-screen font-sans overflow-x-hidden" style={{ background: C.white }}>
             <Navbar />
 
-            {/* Hero Section */}
-            <section className="relative h-[50vh] flex items-center justify-center overflow-hidden">
-                <div className="absolute inset-0 z-0">
-                    <Image
-                        src="/mission-main-bg.png"
-                        alt="Cinematic Space"
-                        fill
-                        className="object-cover scale-105 opacity-70"
-                        priority
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-b from-sky-light/20 to-white" />
+            {/* ══════════════════════════════════════════
+                HERO  —  Queen Blue dark
+            ═══════════════════════════════════════════ */}
+            <section className="relative pt-28 pb-20 px-6 md:px-16 overflow-hidden" style={{ background: C.darkHero }}>
+
+                {/* Dot grid */}
+                <div className="pointer-events-none absolute inset-0 opacity-[0.04]"
+                    style={{ backgroundImage: `radial-gradient(circle, ${C.cadetBlue} 1px, transparent 1px)`, backgroundSize: "40px 40px" }} />
+
+                {/* Glow */}
+                <div className="pointer-events-none absolute inset-0"
+                    style={{ background: `radial-gradient(ellipse 70% 65% at 65% 55%, ${C.queenBlue} 0%, transparent 70%)` }} />
+
+                {/* Floral left */}
+                <div className="absolute -left-24 top-1/2 -translate-y-1/2 pointer-events-none">
+                    <FloralLarge />
+                </div>
+                {/* Floral top-right */}
+                <div className="absolute -right-14 -top-14 pointer-events-none">
+                    <FloralSmall />
                 </div>
 
-                {/* Mandala bg */}
-                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] h-[400px] text-saffron-gold/[0.04] animate-mandala-spin pointer-events-none z-[1]">
-                    <MandalaPattern className="w-full h-full" />
-                </div>
+                {/* Rings */}
+                <svg viewBox="0 0 600 600"
+                    className="pointer-events-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-2xl h-auto opacity-[0.06]"
+                    fill="none">
+                    <circle cx="300" cy="300" r="280" stroke={C.cadetBlue} strokeWidth="1" />
+                    <circle cx="300" cy="300" r="220" stroke={C.mandarin} strokeWidth="0.8" />
+                    <circle cx="300" cy="300" r="160" stroke={C.cadetBlue} strokeWidth="0.6" />
+                    {Array.from({ length: 12 }).map((_, i) => (
+                        <line key={i} x1="300" y1="20" x2="300" y2="580"
+                            stroke={C.mandarin} strokeWidth="0.4" opacity="0.5"
+                            transform={`rotate(${i * 15} 300 300)`} />
+                    ))}
+                </svg>
 
-                <div className="relative z-20 text-center px-4 max-w-6xl mx-auto pt-12">
-                    <motion.div
-                        initial={{ opacity: 0, y: 10 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.8 }}
-                        className="mb-2"
-                    >
-                        <span className="font-hindi text-saffron-gold/60 text-sm tracking-widest">
+                {/* Text */}
+                <div className="relative z-10 max-w-5xl mx-auto flex flex-col md:flex-row md:items-end md:justify-between gap-6">
+                    <div>
+                        <motion.p initial={{ opacity: 0, y: 6 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}
+                            className="font-hindi text-sm tracking-widest mb-2"
+                            style={{ color: `${C.mandarin}CC` }}>
                             परिचालन क्षमताएं
-                        </span>
-                        <br />
-                        <span className="text-charcoal/40 text-[9px] font-black tracking-[0.5em] uppercase">
-                            Operational Capabilities
-                        </span>
-                    </motion.div>
-                    <motion.h1
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        transition={{ duration: 1, delay: 0.2 }}
-                        className="text-6xl md:text-8xl font-black tracking-tighter uppercase leading-[0.9] text-charcoal"
-                    >
-                        Mission<br />
-                        <span className="text-charcoal/25">Profiles</span>
-                    </motion.h1>
+                        </motion.p>
+                        <motion.h1 initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7, delay: 0.1 }}
+                            className="text-5xl md:text-7xl font-black tracking-tighter uppercase leading-[0.9]"
+                            style={{ color: C.white }}>
+                            Mission<br />
+                            <span style={{ color: C.cadetBlue }}>Profiles</span>
+                        </motion.h1>
+                    </div>
+                    <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.8, delay: 0.3 }}
+                        className="text-[11px] font-bold tracking-[0.35em] uppercase md:text-right max-w-[200px]"
+                        style={{ color: `${C.cadetBlue}70` }}>
+                        Four orbital classes.<br />One launch system.
+                    </motion.p>
                 </div>
+
+                {/* Fade into body */}
+                <div className="pointer-events-none absolute bottom-0 left-0 right-0 h-20"
+                    style={{ background: `linear-gradient(to bottom, transparent, ${C.white})` }} />
             </section>
 
-            {/* Mission Cards */}
-            <section className="relative z-20 bg-white py-16 md:py-24">
-                <div className="max-w-5xl mx-auto px-6">
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                        {missions.map((mission, index) => (
-                            <motion.div
-                                key={mission.orbit}
-                                initial={{ opacity: 0, y: 30 }}
-                                whileInView={{ opacity: 1, y: 0 }}
-                                viewport={{ once: true, margin: "-50px" }}
-                                transition={{ duration: 0.6, delay: index * 0.1 }}
-                                className="group relative aspect-[3/4] rounded-[24px] overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-500 hover:-translate-y-2"
-                            >
-                                <Image
-                                    src={mission.image}
-                                    alt={mission.fullName}
-                                    fill
-                                    className="object-cover group-hover:scale-105 transition-transform duration-700"
-                                />
+            {/* ══════════════════════════════════════════
+                MISSION LIST  —  Desert Sand body
+            ═══════════════════════════════════════════ */}
+            <section className="py-4 px-6 md:px-16" style={{ background: C.white }}>
+                <div className="max-w-5xl mx-auto">
+                    {missions.map((mission, index) => (
+                        <motion.div key={mission.orbit}
+                            initial={{ opacity: 0, y: 24 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true, margin: "-30px" }}
+                            transition={{ duration: 0.55, delay: index * 0.08 }}>
 
-                                {/* Gradient overlay */}
-                                <div className="absolute inset-0 bg-gradient-to-b from-charcoal/20 via-transparent to-charcoal/90" />
+                            {/* Rule */}
+                            <div className="h-px" style={{ background: `${C.queenBlue}25` }} />
 
-                                <div className="absolute inset-0 flex flex-col justify-between p-6">
-                                    <div className="flex items-center gap-2">
-                                        <LotusAccent className="w-5 h-5 text-saffron-gold/60" />
-                                        <p className="text-white/90 text-sm font-medium tracking-wide" style={{ textShadow: '0 2px 4px rgba(0,0,0,0.3)' }}>
+                            <div className="py-10 grid grid-cols-12 gap-6 group">
+                                {/* Index */}
+                                <div className="col-span-2 md:col-span-1 pt-1">
+                                    <span className="text-[11px] font-black tracking-[0.3em]"
+                                        style={{ color: `${C.queenBlue}60` }}>
+                                        {mission.index}
+                                    </span>
+                                </div>
+
+                                {/* Orbit watermark */}
+                                <div className="hidden md:flex col-span-2 items-center">
+                                    <span className="text-6xl font-black tracking-tighter select-none transition-colors duration-500"
+                                        style={{ color: `${C.queenBlue}15` }}
+                                        onMouseEnter={e => (e.currentTarget.style.color = `${C.mandarin}50`)}
+                                        onMouseLeave={e => (e.currentTarget.style.color = `${C.queenBlue}15`)}>
+                                        {mission.orbit}
+                                    </span>
+                                </div>
+
+                                {/* Content */}
+                                <div className="col-span-10 md:col-span-6 space-y-3">
+                                    <div>
+                                        <h2 className="text-2xl md:text-3xl font-bold tracking-tight leading-tight"
+                                            style={{ color: C.queenBlue }}>
+                                            {mission.fullName}
+                                        </h2>
+                                        {/* Tagline — consistently Mandarin */}
+                                        <p className="text-xs font-semibold tracking-widest uppercase mt-1"
+                                            style={{ color: C.mandarin }}>
                                             {mission.tagline}
                                         </p>
                                     </div>
-
-                                    <div className="space-y-3">
-                                        <h2 className="text-2xl md:text-3xl font-bold text-white tracking-tight leading-tight">
-                                            {mission.fullName}.
-                                        </h2>
-                                        <p className="text-white/70 text-sm leading-relaxed line-clamp-2">
-                                            {mission.description}
-                                        </p>
-                                        <button className="inline-flex items-center px-5 py-2.5 rounded-full bg-saffron-gold/20 hover:bg-saffron-gold/30 border border-saffron-gold/20 transition-all duration-300">
-                                            <span className="text-white text-xs font-medium tracking-wide">
-                                                {mission.capacity} to {mission.orbit}
+                                    <p className="text-sm leading-relaxed max-w-lg"
+                                        style={{ color: `${C.queenBlue}99` }}>
+                                        {mission.description}
+                                    </p>
+                                    {/* Tags — consistently English Red */}
+                                    <div className="flex flex-wrap gap-2 pt-1">
+                                        {mission.tags.map((tag) => (
+                                            <span key={tag}
+                                                className="text-[9px] font-bold uppercase tracking-widest px-3 py-1 rounded-full border"
+                                                style={{
+                                                    color: C.englishRed,
+                                                    borderColor: `${C.englishRed}45`,
+                                                    background: `${C.englishRed}0E`,
+                                                }}>
+                                                {tag}
                                             </span>
-                                        </button>
-                                        <div className="flex items-center justify-between pt-2">
-                                            <span className="text-white/50 text-xs font-medium">
-                                                intensity.{mission.orbit.toLowerCase()}
-                                            </span>
-                                            <span className="text-white/50 text-xs font-medium">
-                                                {mission.tags.join(' + ')}
-                                            </span>
-                                        </div>
+                                        ))}
                                     </div>
                                 </div>
-                            </motion.div>
-                        ))}
-                    </div>
+
+                                {/* Capacity — consistently Queen Blue → Mandarin on hover */}
+                                <div className="col-span-12 md:col-span-3 flex md:flex-col md:items-end md:justify-center gap-3 md:gap-1">
+                                    <div className="text-right">
+                                        <p className="text-3xl md:text-4xl font-black tracking-tight transition-colors duration-400 cursor-default"
+                                            style={{ color: C.queenBlue }}
+                                            onMouseEnter={e => (e.currentTarget.style.color = C.mandarin)}
+                                            onMouseLeave={e => (e.currentTarget.style.color = C.queenBlue)}>
+                                            {mission.capacity}
+                                        </p>
+                                        <p className="text-[9px] font-bold tracking-[0.35em] uppercase mt-0.5"
+                                            style={{ color: `${C.queenBlue}50` }}>
+                                            Payload to {mission.orbit}
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </motion.div>
+                    ))}
+                    <div className="h-px" style={{ background: `${C.queenBlue}25` }} />
                 </div>
             </section>
 
-            {/* CTA row */}
-            <section className="py-12 border-t border-charcoal/5 text-center">
-                <a
-                    href="/contact"
-                    className="inline-flex items-center gap-3 group px-8 py-3 rounded-full border border-charcoal/10 hover:border-saffron-gold/40 hover:bg-saffron-gold/5 transition-all"
-                >
-                    <span className="font-hindi text-saffron-gold/50 text-xs mr-2">मिशन कॉन्फ़िगर करें</span>
-                    <span className="text-[10px] font-black tracking-[0.4em] uppercase text-charcoal">Configure Mission</span>
-                    <div className="w-6 h-[1px] bg-saffron-gold/40 group-hover:w-10 transition-all" />
-                </a>
+            {/* ══════════════════════════════════════════
+                CTA  —  Queen Blue bg
+            ═══════════════════════════════════════════ */}
+            <section className="relative py-16 px-6 md:px-16 text-center overflow-hidden"
+                style={{ background: C.queenBlue }}>
+                {/* Ghost floral */}
+                <div className="pointer-events-none absolute right-8 bottom-0 translate-y-1/4">
+                    <FloralSmall />
+                </div>
+                <div className="pointer-events-none absolute inset-0 opacity-[0.06]"
+                    style={{ backgroundImage: `radial-gradient(circle, ${C.white} 1px, transparent 1px)`, backgroundSize: "32px 32px" }} />
+
+                <motion.div variants={fadeUp} initial="hidden" whileInView="show" viewport={{ once: true }} className="relative z-10">
+                    <p className="text-[10px] font-bold uppercase tracking-[0.5em] mb-6"
+                        style={{ color: C.cadetBlue }}>
+                        Ready to Launch
+                    </p>
+                    <a href="/contact" className="inline-flex items-center gap-4 group">
+                        <div className="h-px transition-all duration-300 group-hover:w-14 w-8"
+                            style={{ background: `${C.white}50` }} />
+                        <span className="font-hindi text-xs" style={{ color: `${C.white}70` }}>
+                            मिशन कॉन्फ़िगर करें
+                        </span>
+                        <span className="text-[10px] font-black tracking-[0.5em] uppercase transition-colors duration-300 group-hover:opacity-100 opacity-75"
+                            style={{ color: C.mandarin }}>
+                            Configure a Mission
+                        </span>
+                        <div className="h-px transition-all duration-300 group-hover:w-14 w-8"
+                            style={{ background: `${C.white}50` }} />
+                    </a>
+                </motion.div>
             </section>
 
             <Footer />

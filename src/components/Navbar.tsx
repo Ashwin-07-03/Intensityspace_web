@@ -45,26 +45,30 @@ interface NavbarProps {
 
 export default function Navbar({ dark = false }: NavbarProps) {
     const [isScrolled, setIsScrolled] = useState(false);
+    const [mounted, setMounted] = useState(false);
     const [hoveredItem, setHoveredItem] = useState<string | null>(null);
     const pathname = usePathname();
-    const isHome = pathname === "/";
 
     useEffect(() => {
+        setMounted(true);
         const handleScroll = () => {
             setIsScrolled(window.scrollY > 20);
         };
+        // Check scroll position immediately on mount
+        handleScroll();
         window.addEventListener("scroll", handleScroll, { passive: true });
         return () => window.removeEventListener("scroll", handleScroll);
     }, []);
 
-    const showBackground = isScrolled;
+    // Only apply scroll-based styles after mount to prevent hydration mismatch
+    const showBackground = mounted && isScrolled;
 
     return (
-        <div className="fixed top-0 left-0 w-full z-[100] transform-gpu px-4 pt-6">
+        <div className="fixed top-0 left-0 w-full z-[100] transform-gpu">
             <nav
-                className={`mx-auto max-w-[1000px] h-[70px] rounded-2xl border transition-all duration-500 will-change-[background-color,backdrop-filter,border-color,box-shadow] flex items-center justify-between px-8 relative ${showBackground
-                    ? "bg-white/90 border-saffron-gold/15 shadow-2xl backdrop-blur-3xl"
-                    : "bg-white/60 border-charcoal/5 backdrop-blur-xl"
+                className={`w-full h-[70px] border-b transition-all duration-500 flex items-center justify-between px-8 md:px-12 relative ${showBackground
+                    ? "bg-white/90 border-saffron-gold/15 shadow-md backdrop-blur-lg"
+                    : "bg-white/70 border-black/5 backdrop-blur-sm"
                     }`}
             >
                 {/* Subtle rangoli dot pattern at bottom edge */}

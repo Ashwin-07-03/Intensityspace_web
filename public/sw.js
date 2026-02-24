@@ -1,9 +1,8 @@
-const CACHE_NAME = 'intensity-space-v1';
+const CACHE_NAME = 'intensity-space-v2';
 const ASSETS_TO_CACHE = [
     '/',
     '/manifest.json',
     '/logo.png',
-    '/globals.css'
 ];
 
 self.addEventListener('install', (event) => {

@@ -12,12 +12,13 @@ export default function SmoothScroll({ children }: { children: ReactNode }) {
         <ReactLenis
             root
             options={{
-                lerp: 0.1,         // Smoothness factor (0.1 is standard cinematic)
-                duration: 1.5,     // Duration of the scroll animation
+                lerp: 0.09,        // Slightly snappier (was 0.1)
+                duration: 1.1,     // Down from 1.5 — less "trailing" lag feeling
                 smoothWheel: true,
-                wheelMultiplier: 1.1,
-                touchMultiplier: 2,
+                wheelMultiplier: 1.0,
+                touchMultiplier: 1.5,
                 infinite: false,
+                syncTouch: false,  // Prevents double-processing on touch devices
             }}
         >
             {children}

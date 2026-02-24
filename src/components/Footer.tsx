@@ -10,8 +10,8 @@ export default function Footer() {
             {/* Subtle warm orange glow at top */}
             <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[60%] h-[200px] bg-saffron-gold/[0.04] blur-[80px] rounded-full pointer-events-none" />
 
-            {/* Mandala watermark background */}
-            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] text-saffron-gold/[0.04] animate-mandala-spin pointer-events-none">
+            {/* Mandala watermark background — static, no animation */}
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] text-saffron-gold/[0.04] pointer-events-none">
                 <MandalaPattern className="w-full h-full" />
             </div>
 
