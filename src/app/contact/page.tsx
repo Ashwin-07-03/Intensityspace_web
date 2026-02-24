@@ -19,7 +19,7 @@ export default function ContactPage() {
                 {/* ─── Left: Stacked Images ─── */}
                 <div className="w-full md:w-[45%] p-4 md:p-6 self-start space-y-4" style={{ background: "#E8F0FC" }}>
                     {/* Top image — Arched Corridor */}
-                    <div className="relative w-full h-[40vh] md:h-[70vh] rounded-2xl overflow-hidden">
+                    <div className="relative w-full h-[35vh] md:h-[70vh] rounded-2xl overflow-hidden">
                         <Image
                             src="/contact-arches.jpg"
                             alt="Indian Architecture — Arched Corridor"
@@ -30,8 +30,8 @@ export default function ContactPage() {
                         <div className="absolute inset-0 bg-gradient-to-t from-charcoal/20 via-transparent to-transparent" />
                     </div>
 
-                    {/* Bottom image — Temple */}
-                    <div className="relative w-full h-[35vh] md:h-[60vh] rounded-2xl overflow-hidden">
+                    {/* Bottom image — Temple (hidden on mobile) */}
+                    <div className="hidden md:block relative w-full h-[60vh] rounded-2xl overflow-hidden">
                         <Image
                             src="/contact-temple.jpg"
                             alt="Ancient Indian Temple"
@@ -41,8 +41,8 @@ export default function ContactPage() {
                         <div className="absolute inset-0 bg-gradient-to-t from-charcoal/20 via-transparent to-transparent" />
                     </div>
 
-                    {/* Third image — Cave Temple */}
-                    <div className="relative w-full h-[35vh] md:h-[60vh] rounded-2xl overflow-hidden">
+                    {/* Third image — Cave Temple (hidden on mobile) */}
+                    <div className="hidden md:block relative w-full h-[60vh] rounded-2xl overflow-hidden">
                         <Image
                             src="/contact-caves.jpg"
                             alt="Ancient Indian Cave Architecture"
@@ -82,7 +82,7 @@ export default function ContactPage() {
                                     संपर्क करें
                                 </p>
                             </div>
-                            <h1 className="text-5xl md:text-7xl lg:text-8xl font-sans font-medium tracking-tight text-charcoal leading-[0.9] mb-8">
+                            <h1 className="text-4xl md:text-7xl lg:text-8xl font-sans font-medium tracking-tight text-charcoal leading-[0.9] mb-8">
                                 Get in<br />
                                 <span className="text-charcoal/40 italic font-light">Touch.</span>
                             </h1>
@@ -109,7 +109,7 @@ export default function ContactPage() {
                                     <p className="text-[10px] font-sans font-black text-charcoal/40 group-hover:text-white/40 uppercase tracking-[0.3em] mb-2 transition-colors duration-500">
                                         Primary Contact
                                     </p>
-                                    <span className="text-2xl md:text-4xl font-sans font-light tracking-tight text-charcoal group-hover:text-white transition-colors duration-500">
+                                    <span className="text-lg sm:text-2xl md:text-4xl font-sans font-light tracking-tight text-charcoal group-hover:text-white transition-colors duration-500 break-all">
                                         {email}
                                     </span>
                                 </div>

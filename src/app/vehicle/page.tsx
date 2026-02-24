@@ -34,13 +34,13 @@ export default function VehiclePage() {
 
                     <h1 className="leading-none mb-4">
                         <span
-                            className="block text-7xl md:text-9xl font-black tracking-tighter"
+                            className="block text-5xl sm:text-7xl md:text-9xl font-black tracking-tighter"
                             style={{ color: "#111111" }}
                         >
                             INTENSITY
                         </span>
                         <span
-                            className="block text-[100px] md:text-[160px] font-black leading-[0.85] tracking-tighter"
+                            className="block text-[56px] sm:text-[100px] md:text-[160px] font-black leading-[0.85] tracking-tighter"
                             style={{
                                 WebkitTextStroke: "2px #C4521A",
                                 color: "transparent",

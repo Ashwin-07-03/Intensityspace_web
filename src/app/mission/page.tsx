@@ -197,17 +197,17 @@ export default function MissionPage() {
                             {/* Rule */}
                             <div className="h-px" style={{ background: `${C.queenBlue}25` }} />
 
-                            <div className="py-10 grid grid-cols-12 gap-6 group">
+                            <div className="py-8 md:py-10 flex flex-col md:grid md:grid-cols-12 gap-4 md:gap-6 group">
                                 {/* Index */}
-                                <div className="col-span-2 md:col-span-1 pt-1">
+                                <div className="md:col-span-1">
                                     <span className="text-[11px] font-black tracking-[0.3em]"
                                         style={{ color: `${C.queenBlue}60` }}>
                                         {mission.index}
                                     </span>
                                 </div>
 
-                                {/* Orbit watermark */}
-                                <div className="hidden md:flex col-span-2 items-center">
+                                {/* Orbit watermark — desktop only */}
+                                <div className="hidden md:flex md:col-span-2 items-center">
                                     <span className="text-6xl font-black tracking-tighter select-none transition-colors duration-500"
                                         style={{ color: `${C.queenBlue}15` }}
                                         onMouseEnter={e => (e.currentTarget.style.color = `${C.mandarin}50`)}
@@ -217,13 +217,12 @@ export default function MissionPage() {
                                 </div>
 
                                 {/* Content */}
-                                <div className="col-span-10 md:col-span-6 space-y-3">
+                                <div className="md:col-span-6 space-y-3">
                                     <div>
-                                        <h2 className="text-2xl md:text-3xl font-bold tracking-tight leading-tight"
+                                        <h2 className="text-xl md:text-3xl font-bold tracking-tight leading-tight"
                                             style={{ color: C.queenBlue }}>
                                             {mission.fullName}
                                         </h2>
-                                        {/* Tagline — consistently Mandarin */}
                                         <p className="text-xs font-semibold tracking-widest uppercase mt-1"
                                             style={{ color: C.mandarin }}>
                                             {mission.tagline}
@@ -233,7 +232,6 @@ export default function MissionPage() {
                                         style={{ color: `${C.queenBlue}99` }}>
                                         {mission.description}
                                     </p>
-                                    {/* Tags — consistently English Red */}
                                     <div className="flex flex-wrap gap-2 pt-1">
                                         {mission.tags.map((tag) => (
                                             <span key={tag}
@@ -249,10 +247,10 @@ export default function MissionPage() {
                                     </div>
                                 </div>
 
-                                {/* Capacity — consistently Queen Blue → Mandarin on hover */}
-                                <div className="col-span-12 md:col-span-3 flex md:flex-col md:items-end md:justify-center gap-3 md:gap-1">
-                                    <div className="text-right">
-                                        <p className="text-3xl md:text-4xl font-black tracking-tight transition-colors duration-400 cursor-default"
+                                {/* Capacity */}
+                                <div className="md:col-span-3 flex md:flex-col md:items-end md:justify-center gap-3 md:gap-1">
+                                    <div className="md:text-right">
+                                        <p className="text-2xl md:text-4xl font-black tracking-tight transition-colors duration-400 cursor-default"
                                             style={{ color: C.queenBlue }}
                                             onMouseEnter={e => (e.currentTarget.style.color = C.mandarin)}
                                             onMouseLeave={e => (e.currentTarget.style.color = C.queenBlue)}>

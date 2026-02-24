@@ -5,7 +5,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
-import { ChevronDown } from "lucide-react";
+import { ChevronDown, Menu, X } from "lucide-react";
 
 const navItems = [
     {
@@ -47,6 +47,8 @@ export default function Navbar({ dark = false }: NavbarProps) {
     const [isScrolled, setIsScrolled] = useState(false);
     const [mounted, setMounted] = useState(false);
     const [hoveredItem, setHoveredItem] = useState<string | null>(null);
+    const [mobileOpen, setMobileOpen] = useState(false);
+    const [mobileExpanded, setMobileExpanded] = useState<string | null>(null);
     const pathname = usePathname();
 
     useEffect(() => {
@@ -54,19 +56,34 @@ export default function Navbar({ dark = false }: NavbarProps) {
         const handleScroll = () => {
             setIsScrolled(window.scrollY > 20);
         };
-        // Check scroll position immediately on mount
         handleScroll();
         window.addEventListener("scroll", handleScroll, { passive: true });
         return () => window.removeEventListener("scroll", handleScroll);
     }, []);
 
-    // Only apply scroll-based styles after mount to prevent hydration mismatch
+    // Close drawer on route change
+    useEffect(() => {
+        setMobileOpen(false);
+        setMobileExpanded(null);
+    }, [pathname]);
+
+    // Lock body scroll when drawer is open
+    useEffect(() => {
+        if (mobileOpen) {
+            document.body.style.overflow = "hidden";
+        } else {
+            document.body.style.overflow = "";
+        }
+        return () => { document.body.style.overflow = ""; };
+    }, [mobileOpen]);
+
     const showBackground = mounted && isScrolled;
 
     return (
-        <div className="fixed top-0 left-0 w-full z-[100] transform-gpu">
+        <div className="fixed top-0 left-0 w-full z-[100] transform-gpu" suppressHydrationWarning>
             <nav
-                className={`w-full h-[70px] border-b transition-all duration-500 flex items-center justify-between px-8 md:px-12 relative ${showBackground
+                suppressHydrationWarning
+                className={`w-full h-[70px] border-b transition-all duration-500 flex items-center justify-between px-6 md:px-12 relative ${showBackground
                     ? "bg-white/90 border-saffron-gold/15 shadow-md backdrop-blur-lg"
                     : "bg-white/70 border-black/5 backdrop-blur-sm"
                     }`}
@@ -103,8 +120,8 @@ export default function Navbar({ dark = false }: NavbarProps) {
                     </div>
                 </Link>
 
-                {/* Navigation Items Center */}
-                <div className="flex items-center gap-2 absolute left-1/2 -translate-x-1/2">
+                {/* Desktop Navigation Items Center */}
+                <div className="hidden md:flex items-center gap-2 absolute left-1/2 -translate-x-1/2">
                     {navItems.map((item) => (
                         <div
                             key={item.label}
@@ -162,14 +179,105 @@ export default function Navbar({ dark = false }: NavbarProps) {
                     ))}
                 </div>
 
-                {/* Action Button Right */}
+                {/* Desktop Action Button Right */}
                 <Link
                     href="/contact"
                     className="hidden md:flex items-center px-6 py-2 rounded-full text-[10px] font-sans font-black tracking-widest uppercase transition-all duration-300 bg-charcoal text-white hover:bg-saffron-gold hover:text-charcoal"
                 >
                     Contact
                 </Link>
+
+                {/* Mobile Hamburger Button */}
+                <button
+                    className="md:hidden flex items-center justify-center w-10 h-10 rounded-full text-charcoal hover:bg-saffron-gold/10 transition-colors duration-200"
+                    onClick={() => setMobileOpen(!mobileOpen)}
+                    aria-label={mobileOpen ? "Close menu" : "Open menu"}
+                >
+                    {mobileOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+                </button>
             </nav>
+
+            {/* Mobile Drawer */}
+            <AnimatePresence>
+                {mobileOpen && (
+                    <>
+                        {/* Backdrop */}
+                        <motion.div
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            exit={{ opacity: 0 }}
+                            transition={{ duration: 0.2 }}
+                            className="fixed inset-0 top-[70px] bg-charcoal/20 backdrop-blur-sm z-[90]"
+                            onClick={() => setMobileOpen(false)}
+                        />
+
+                        {/* Drawer panel */}
+                        <motion.div
+                            initial={{ opacity: 0, y: -8 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            exit={{ opacity: 0, y: -8 }}
+                            transition={{ duration: 0.25, ease: "easeOut" }}
+                            className="absolute top-[70px] left-0 right-0 bg-white border-b border-saffron-gold/10 shadow-2xl z-[95] overflow-y-auto max-h-[calc(100vh-70px)]"
+                        >
+                            <div className="px-6 py-4">
+                                {navItems.map((item, idx) => (
+                                    <div key={item.label} className={idx !== 0 ? "border-t border-charcoal/5" : ""}>
+                                        {/* Parent row */}
+                                        <button
+                                            className="w-full flex items-center justify-between py-4 text-left"
+                                            onClick={() => setMobileExpanded(mobileExpanded === item.label ? null : item.label)}
+                                        >
+                                            <span className="text-xs font-sans font-black tracking-[0.25em] uppercase text-charcoal">
+                                                {item.label}
+                                            </span>
+                                            {item.subItems && (
+                                                <ChevronDown className={`w-4 h-4 text-charcoal/40 transition-transform duration-300 ${mobileExpanded === item.label ? "rotate-180" : ""}`} />
+                                            )}
+                                        </button>
+
+                                        {/* Sub-items */}
+                                        <AnimatePresence>
+                                            {mobileExpanded === item.label && item.subItems && (
+                                                <motion.div
+                                                    initial={{ height: 0, opacity: 0 }}
+                                                    animate={{ height: "auto", opacity: 1 }}
+                                                    exit={{ height: 0, opacity: 0 }}
+                                                    transition={{ duration: 0.22 }}
+                                                    className="overflow-hidden"
+                                                >
+                                                    <div className="pb-3 pl-4 space-y-1">
+                                                        {item.subItems.map(sub => (
+                                                            <Link
+                                                                key={sub.label}
+                                                                href={sub.href}
+                                                                className="block py-2.5 text-[11px] font-sans font-bold tracking-[0.2em] uppercase text-charcoal/50 hover:text-saffron-gold transition-colors"
+                                                                onClick={() => setMobileOpen(false)}
+                                                            >
+                                                                {sub.label}
+                                                            </Link>
+                                                        ))}
+                                                    </div>
+                                                </motion.div>
+                                            )}
+                                        </AnimatePresence>
+                                    </div>
+                                ))}
+
+                                {/* Contact CTA */}
+                                <div className="border-t border-charcoal/5 pt-5 pb-4">
+                                    <Link
+                                        href="/contact"
+                                        className="flex items-center justify-center w-full py-3.5 rounded-full text-xs font-sans font-black tracking-widest uppercase bg-charcoal text-white hover:bg-saffron-gold hover:text-charcoal transition-all duration-300"
+                                        onClick={() => setMobileOpen(false)}
+                                    >
+                                        Contact Us
+                                    </Link>
+                                </div>
+                            </div>
+                        </motion.div>
+                    </>
+                )}
+            </AnimatePresence>
         </div>
     );
 }

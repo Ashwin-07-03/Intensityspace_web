@@ -6,12 +6,12 @@ import { MandalaPattern, RangoliDivider } from "./IndianPatterns";
 
 export default function Footer() {
     return (
-        <footer className="relative bg-white text-charcoal py-16 px-8 overflow-hidden border-t border-saffron-gold/10">
+        <footer suppressHydrationWarning className="relative bg-white text-charcoal py-16 px-8 overflow-hidden border-t border-saffron-gold/10">
             {/* Subtle warm orange glow at top */}
             <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[60%] h-[200px] bg-saffron-gold/[0.04] blur-[80px] rounded-full pointer-events-none" />
 
             {/* Mandala watermark background — static, no animation */}
-            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] text-saffron-gold/[0.04] pointer-events-none">
+            <div suppressHydrationWarning className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] text-saffron-gold/[0.04] pointer-events-none">
                 <MandalaPattern className="w-full h-full" />
             </div>
 
@@ -21,9 +21,9 @@ export default function Footer() {
             </div>
 
             <div className="relative z-10 max-w-6xl mx-auto">
-                <div className="grid md:grid-cols-4 gap-12 mb-12">
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-12 mb-12">
                     {/* Logo & Description */}
-                    <div className="md:col-span-1">
+                    <div className="col-span-2 md:col-span-1">
                         <Link href="/" className="flex items-center gap-2 mb-4">
                             <div className="relative w-8 h-8">
                                 <Image

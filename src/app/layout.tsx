@@ -34,7 +34,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en-IN">
+    <html lang="en-IN" suppressHydrationWarning>
       <head>
         <link rel="manifest" href="/manifest.json" />
         <meta name="theme-color" content="#FAF3E8" />
@@ -57,6 +57,7 @@ export default function RootLayout({
         />
       </head>
       <body
+        suppressHydrationWarning
         className={`${outfit.variable} ${cormorant.variable} ${notoDevanagari.variable} font-sans antialiased bg-background text-foreground`}
       >
         <SmoothScroll>
